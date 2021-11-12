@@ -1,0 +1,45 @@
+
+        <h1>Sociade Home Page with ejs </h1>
+        <% if(locals.user){%>
+        <form action="/post/createpost" method="POST">
+                <!-- <p>id: <%= user.id%></p> -->
+                <textarea name="content" cols="30" rows="5" placeholder="write here"></textarea>
+                <input type="submit" value="Post">
+        </form>
+        <%}%>
+        <div>
+                
+                <ul>
+                    <% for(let i of postforhome){%>
+                   
+                            <div style="border: 2px solid green;">  
+                                <h2><%= i.content %></h2>
+                                <small><%= i.user.name%></small>
+                                <br>
+                            </div>
+                            <div>
+                                    <ul>
+                                        <% for(comment of i.comment){%>
+                                                <p>
+                                                       <h4 style="color: red;"> <%=comment.content%></h4>
+                                                        
+                                                        <small>
+                                                                <%=comment.user.name%>
+                                                        </small>
+                                                </p>
+                                        <%}%>
+                                    </ul>
+                            </div>
+                            <% if(locals.user){%>
+                                <div>
+                                        <form action="/comment/createcomment" method="post">
+                                                <input type="text" name="content" placeholder="write Comment..." required>
+                                                <input type="hidden" name="post" value="<%=i._id%>">
+                                                <input type="submit" value="Add Comment">
+                                        </form>
+                                </div>
+                           <%}%>
+                        
+                    <% } %>
+                </ul>
+        </div>

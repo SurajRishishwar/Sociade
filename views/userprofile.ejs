@@ -1,0 +1,22 @@
+
+<link rel="stylesheet" href="/css/userprofile.css">
+<h2>This is profile using layouts</h2>
+<p>Name : <%= user.name%></p>
+<p>E-mail : <%= user.email%></p>
+<!-- <p>id : <%= user.id%></p> -->
+<div>
+                
+    <ul>
+        <% for(let i of postofuserbyid){%>
+       
+                <div>
+                    <p><%= i.content %></p>
+                    <p><%= i.user.name%></p>
+                    <br>
+                </div>
+            
+        <% } %>
+    </ul>
+</div>
+
+<a href="/users/sign-out">Sign Out</a>
