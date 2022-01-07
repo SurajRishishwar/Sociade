@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+        const passport = require('passport');
 
 const userController = require('../controllers/users_controller');
-router.get('/profile',passport.checkAuthenticate,userController.uprofile);
+router.get('/profile/:id',passport.checkAuthenticate,userController.uprofile);
+router.post('/update/:id',passport.checkAuthenticate,userController.update);
 
 //const userPostt = require('../controllers/users_controller');
 router.get('/userpost',userController.userpost)
