@@ -16,6 +16,7 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(express.static('./assets'));
 app.use(expressLayouts);
+app.use('/uploads',express.static(__dirname+'/uploads'));
 
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);

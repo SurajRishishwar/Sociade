@@ -1,7 +1,8 @@
 const userpostcomment = require('../models/comments');
 const userpost = require('../models/post');
 
-module.exports.createcomment = function(req,res){
+module.exports.createcomment = async function(req,res){
+   
    userpost.findById(req.body.post,function(err,post){
        if(post){
            userpostcomment.create({
@@ -19,4 +20,38 @@ module.exports.createcomment = function(req,res){
        }
    });
     req.flash('success','comment ho gya');
+} 
+
+
+module.exports.destroy = function(req,res){
+    userpostcomment.findById(req.params.id,function(err,comment){
+        let postid= comment.post;
+    
+       
+         userpost.findById(postid).populate('user').exec(function(err,postcreate){
+             let postcreater=postcreate.user.id;
+             
+             if(postcreater==req.user.id){
+                 comment.remove();
+                
+                 userpost.findByIdAndUpdate(postid,{$pull:{comment:req.params.id}},function(err,post){
+                     return res.redirect('back');
+                     
+                 });
+             }
+             else if(comment.user==req.user.id){
+                 
+                comment.remove();
+
+                userpost.findByIdAndUpdate(postid,{$pull:{comment:req.params.id}},function(err,post){
+                    return res.redirect('back');
+                });
+             }
+             else{
+            
+                return res.redirect('back');
+            }
+         });
+         
+    });
 } 
